@@ -3,7 +3,7 @@ import { View,Text } from 'react-native'
 export default function FavouriteScreen() {
   return (
  <View>
- <Text>this is FavouriteScreen </Text>
+ <Text>this is Favourite Screen </Text>
 </View>
   )
 }
