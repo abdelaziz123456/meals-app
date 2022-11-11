@@ -34,8 +34,13 @@ export default function CategorymealsScreen(props) {
                 duration={itemData.item.duration}
                 complexity={itemData.item.complexity}
                 affordability={itemData.item.affordability}
-               
-                onSelectMeal={() => {}}
+               image={itemData.item.imageUrl}
+                onSelectMeal={() => {
+                  props.navigation.navigate({routeName:'MealDetail',
+                params:{
+                  mealId:itemData.item.id
+                }})
+                }}
               />
             );
           }}
