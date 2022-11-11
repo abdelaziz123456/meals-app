@@ -1,30 +1,54 @@
 import React from "react";
-import { View, Text, Button } from "react-native";
+import {
+  View,
+  Text,
+  Button,
+  FlatList,
+  SafeAreaView,
+  StatusBar,
+} from "react-native";
+import MealUnit from "../Components/MealUnit";
 
-import { CATEGORIES } from "../data/dummy-data";
+import { CATEGORIES, MEALS } from "../data/dummy-data";
 
 export default function CategorymealsScreen(props) {
-  let catId=props.navigation.getparam('categoryId');
-  let selectedCategory=CATEGORIES.find(cat=>cat.id==catId)
+  let catId = props.navigation.getParam("categoryId");
+  let selectedCategory = CATEGORIES.find((cat) => cat.id == catId);
+  // let selectedMeals=MEALS.find(meal=>meal.categoryIds==catId);
+  const displayedMeals = MEALS.filter((meal) =>
+    meal.categoryIds.includes(catId)
+  );
+  console.log(displayedMeals);
   return (
-    <View>
-      <Text>this is Category meals Screen </Text>
-      <Text>{selectedCategory.title}</Text>
-      <Button
-        title="go to meals details"
-        onPress={() => props.navigation.navigate({ routeName: "MealDetail" })}
-      />
-      <Button title="go back" onPress={() => props.navigation.pop()} />
-    </View>
+    <SafeAreaView>
+      <StatusBar />
+      <View>
+        <FlatList
+          style={{ width: "100%" }}
+          data={displayedMeals}
+          renderItem={(itemData) => {
+            return (
+              <MealUnit
+                title={itemData.item.title}
+               
+                duration={itemData.item.duration}
+                complexity={itemData.item.complexity}
+                affordability={itemData.item.affordability}
+               
+                onSelectMeal={() => {}}
+              />
+            );
+          }}
+        />
+      </View>
+    </SafeAreaView>
   );
 }
 
-
-CategorymealsScreen.navigationOptions=(navigationData)=>{
-  let catId= navigationData.navigation.getParam('categoryId');
-  let selectedCategory=CATEGORIES.find(cat=>cat.id==catId);
+CategorymealsScreen.navigationOptions = (navigationData) => {
+  let catId = navigationData.navigation.getParam("categoryId");
+  let selectedCategory = CATEGORIES.find((cat) => cat.id == catId);
   return {
-    headerTitle:selectedCategory.title,
-   
-  }
-}
+    headerTitle: selectedCategory.title,
+  };
+};
