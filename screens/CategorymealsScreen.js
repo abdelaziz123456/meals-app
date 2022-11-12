@@ -18,7 +18,7 @@ export default function CategorymealsScreen(props) {
   const displayedMeals = MEALS.filter((meal) =>
     meal.categoryIds.includes(catId)
   );
-  console.log(displayedMeals);
+
   return (
     <SafeAreaView>
       <StatusBar />

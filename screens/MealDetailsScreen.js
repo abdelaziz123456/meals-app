@@ -33,3 +33,8 @@ MealDetailsScreen.navigationOptions = (navigationData) => {
     </HeaderButtons>
   };
 };
+
+
+
+
+
