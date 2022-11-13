@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   StatusBar,
 } from "react-native";
+import MealsList from "../Components/MealsList";
 import MealUnit from "../Components/MealUnit";
 
 import { CATEGORIES, MEALS } from "../data/dummy-data";
@@ -22,30 +23,7 @@ export default function CategorymealsScreen(props) {
   return (
     <SafeAreaView>
       <StatusBar />
-      <View>
-        <FlatList
-          style={{ width: "100%" }}
-          data={displayedMeals}
-          renderItem={(itemData) => {
-            return (
-              <MealUnit
-                title={itemData.item.title}
-               
-                duration={itemData.item.duration}
-                complexity={itemData.item.complexity}
-                affordability={itemData.item.affordability}
-               image={itemData.item.imageUrl}
-                onSelectMeal={() => {
-                  props.navigation.navigate({routeName:'MealDetail',
-                params:{
-                  mealId:itemData.item.id
-                }})
-                }}
-              />
-            );
-          }}
-        />
-      </View>
+     <MealsList displayedMeals={displayedMeals} navigation={props.navigation}/>
     </SafeAreaView>
   );
 }

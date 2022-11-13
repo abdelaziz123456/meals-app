@@ -10,6 +10,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { createStackNavigator } from "react-navigation-stack";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
+
 //import { createBottomTabNavigator } from "react-navigation-tabs";
 
 const defaultStacknavOptions={
@@ -78,6 +79,9 @@ MealDetail:MealDetailsScreen
 
 
 
+
+
+
 /* bottom tabs  navigator stack start  */
 
 const tabConfig = {
@@ -95,7 +99,7 @@ const tabConfig = {
   Favourite: {
     screen: FavNavigator,
     navigationOptions: {
-      tabBarLabel: "Favourites",
+      
       tabBarIcon: (tabInfo) => {
         return <Ionicons name="ios-star" size={25} color={tabInfo.tintColor} />;
       },
@@ -118,5 +122,33 @@ const MealsFavTabs =
 
 
     /* bottom tabs  navigator stack end  */
+
+
+
+
+
+
+
+//         /* Filter navigator start  */
+
+// const FilterNav=createStackNavigator({
+//     Filters:FilterScreen
+// })
+
+
+
+//         /* Filter navigator end  */
+
+
+
+
+
+
+   
+
+
+
+
+
 
 export default createAppContainer(MealsFavTabs);

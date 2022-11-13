@@ -9,3 +9,7 @@ export default function FilterScreen() {
   )
 }
 
+FilterScreen.navigationOptions={
+  headerTitle:'Filter Meals'
+}
+
