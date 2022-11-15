@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
   Platform,
 } from "react-native";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import CustomHeaderButton from "../Components/CustomHeaderButton";
 import CategoryUnit from "../Components/CategoryUnit";
 import colors from "../constants/colors";
 import { CATEGORIES } from "../data/dummy-data";
@@ -18,7 +20,7 @@ export default function CategoriesScreen(props) {
       renderItem={(itemData) => {
         return (
           <CategoryUnit
-          color={itemData.item.color}
+            color={itemData.item.color}
             title={itemData.item.title}
             onSelect={() => {
               props.navigation.navigate({
@@ -36,12 +38,26 @@ export default function CategoriesScreen(props) {
   );
 }
 
-CategoriesScreen.navigationOptions = {
-  headerTitle: "Meal Categories",
-  headerStyle: {
-    backgroundColor: Platform.OS === "android" ? colors.primaryColor : "white",
-  },
-  headerTintColor: Platform.OS === "android" ? "white" : colors.primaryColor,
+CategoriesScreen.navigationOptions = (navData) => {
+  return {
+    headerTitle: "Meal Categories",
+    headerLeft: (
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+        <Item
+          title="Menu"
+          iconName="ios-menu"
+          onPress={() => {
+            navData.navigation.toggleDrawer();
+          }}
+        />
+      </HeaderButtons>
+    ),
+    headerStyle: {
+      backgroundColor:
+        Platform.OS === "android" ? colors.primaryColor : "white",
+    },
+    headerTintColor: Platform.OS === "android" ? "white" : colors.primaryColor,
+  };
 };
 
 const styles = StyleSheet.create({
