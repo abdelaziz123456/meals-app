@@ -1,32 +1,73 @@
-import React from 'react'
-import { View ,Text} from 'react-native'
-import {HeaderButtons,Item} from 'react-navigation-header-buttons';
-import CustomHeaderButton from '../Components/CustomHeaderButton';
+import React, { useCallback, useEffect, useState } from "react";
+import { View, Text, StyleSheet, Switch, Platform } from "react-native";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import CustomHeaderButton from "../Components/CustomHeaderButton";
+import colors from "../constants/colors";
+export default function FilterScreen(props) {
+  const FilterSwitch = (props) => (
+    <View style={styles.filterContainer}>
+      <Text>{props.label}</Text>
+      <Switch
+        trackColor={{ true: props.trackColor }}
+        thumbColor={Platform.OS == "android" ? props.thumbColor : ""}
+        value={props.state}
+        onValueChange={props.onChange}
+      />
+    </View>
+  );
 
-export default function FilterScreen() {
+  const [isGlutenFree, setGlutenFree] = useState(false);
+  const [isLactosFree, setLactosFree] = useState(false);
+  const [isVegan, setVegan] = useState(false);
+  const [isVegaterian, setVegaterian] = useState(false);
+
+  const saveFilters = useCallback(() => {
+    const appliedFilters = {
+      glutenFree: isGlutenFree,
+      lactosFree: isLactosFree,
+      vagan: isVegan,
+      vegetarian: isVegaterian,
+    };
+    console.log(appliedFilters);
+  }, [isGlutenFree, isLactosFree, isVegan, isVegaterian]);
+
+  useEffect(() => {
+    props.navigation.setParams({ save: saveFilters });
+  }, [saveFilters]);
   return (
-    <View>
-    <Text>this is FilterScreen </Text>
-  </View>
-  )
+    <View style={styles.screen}>
+      <Text style={styles.title}>Available Filters /Restrictions</Text>
+      <FilterSwitch
+        label="Gluten-Free"
+        state={isGlutenFree}
+        onChange={(newValue) => setGlutenFree(newValue)}
+        thumbColor={colors.primaryColor}
+        trackColor={colors.primaryColor}
+      />
+      <FilterSwitch
+        label="Lactos-Free"
+        state={isLactosFree}
+        onChange={(newValue) => setLactosFree(newValue)}
+        thumbColor={colors.primaryColor}
+        trackColor={colors.primaryColor}
+      />
+      <FilterSwitch
+        label="Vegan"
+        state={isVegan}
+        onChange={(newValue) => setVegan(newValue)}
+        thumbColor={colors.primaryColor}
+        trackColor={colors.primaryColor}
+      />
+      <FilterSwitch
+        label="Vegatarian"
+        state={isVegaterian}
+        onChange={(newValue) => setVegaterian(newValue)}
+        thumbColor={colors.primaryColor}
+        trackColor={colors.primaryColor}
+      />
+    </View>
+  );
 }
-
-
-
-// FilterScreen.navigationOptions=(navData) =>{
-//   return {
-//     headerTitle:'Filter Meals',
-//     headerLeft:()=><HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-//       <Item iconName='ios-menu' title='menu' onpress={()=>{
-//         navData.navigation.toggleDrawer()
-//       }}/>
-  
-//     </HeaderButtons>
-
-
-//   }
-
-// }
 
 FilterScreen.navigationOptions = (navData) => {
   return {
@@ -38,11 +79,35 @@ FilterScreen.navigationOptions = (navData) => {
           iconName="ios-menu"
           onPress={() => {
             navData.navigation.toggleDrawer();
-        
           }}
         />
       </HeaderButtons>
     ),
-   
+    headerRight: (
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+        <Item title="Save" onPress={navData.navigation.getParam("save")} />
+      </HeaderButtons>
+    ),
   };
 };
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    alignItems: "center",
+  },
+
+  title: {
+    fontFamily: "open-sans-bold",
+    fontSize: 22,
+    margin: 20,
+    textAlign: "center",
+  },
+  filterContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "80%",
+    marginVertical: 10,
+  },
+});
