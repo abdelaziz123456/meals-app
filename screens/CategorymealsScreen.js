@@ -10,20 +10,23 @@ import {
 import MealsList from "../Components/MealsList";
 import MealUnit from "../Components/MealUnit";
 
-import { CATEGORIES, MEALS } from "../data/dummy-data";
-
+import { CATEGORIES } from "../data/dummy-data";
+import { useSelector } from "react-redux";
 export default function CategorymealsScreen(props) {
+  const selectedMeals = useSelector((state) => state.meals.filteredMeals);
   let catId = props.navigation.getParam("categoryId");
-  let selectedCategory = CATEGORIES.find((cat) => cat.id == catId);
-  // let selectedMeals=MEALS.find(meal=>meal.categoryIds==catId);
-  const displayedMeals = MEALS.filter((meal) =>
+
+  const displayedMeals = selectedMeals.filter((meal) =>
     meal.categoryIds.includes(catId)
   );
 
   return (
     <SafeAreaView>
       <StatusBar />
-     <MealsList displayedMeals={displayedMeals} navigation={props.navigation}/>
+      <MealsList
+        displayedMeals={displayedMeals}
+        navigation={props.navigation}
+      />
     </SafeAreaView>
   );
 }
