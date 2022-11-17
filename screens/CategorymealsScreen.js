@@ -12,6 +12,7 @@ import MealUnit from "../Components/MealUnit";
 
 import { CATEGORIES } from "../data/dummy-data";
 import { useSelector } from "react-redux";
+import FeedbackContainer from "../Components/FeedbackContainer";
 export default function CategorymealsScreen(props) {
   const selectedMeals = useSelector((state) => state.meals.filteredMeals);
   let catId = props.navigation.getParam("categoryId");
@@ -23,10 +24,15 @@ export default function CategorymealsScreen(props) {
   return (
     <SafeAreaView>
       <StatusBar />
-      <MealsList
+      {
+        displayedMeals.length==0 || !displayedMeals ?
+        <FeedbackContainer lines={['No Meals Found','Check Your Filters ']}/> 
+        
+        :
+        <MealsList
         displayedMeals={displayedMeals}
         navigation={props.navigation}
-      />
+      />}
     </SafeAreaView>
   );
 }

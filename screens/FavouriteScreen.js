@@ -1,18 +1,16 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../Components/CustomHeaderButton";
 import MealsList from "../Components/MealsList";
-import colors from "../constants/colors";
+import FeedbackContainer from "../Components/FeedbackContainer";
 export default function FavouriteScreen(props) {
   const favMeals = useSelector((state) => state.meals.favouriteMeals);
   if (favMeals.length == 0 || !favMeals) {
     return (
-      <View style={styles.feedbackContainer}>
-        <Text style={styles.feedbackText}> No Favourite Meals Found .</Text>
-        <Text style={styles.feedbackText}> Start Adding Some !</Text>
-      </View>
+      <FeedbackContainer
+        lines={["No Favourite Meals Found .", "Start Adding Some !"]}
+      />
     );
   }
   return <MealsList displayedMeals={favMeals} navigation={props.navigation} />;
@@ -34,19 +32,3 @@ FavouriteScreen.navigationOptions = (navData) => {
     ),
   };
 };
-
-
-
-const styles=StyleSheet.create({
-  feedbackContainer:{
-    alignItems:'center',
-    justifyContent:'center',
-    height:400
-
-  },
-  feedbackText:{
-   fontFamily:'open-sans-bold',
-   fontSize:20,
-   color:colors.primaryColor
-  }
-})
